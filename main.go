@@ -75,7 +75,7 @@ func main() {
 
 	// Copy files from public/ to dist/ using cp command if public exists
 	if stat, err := os.Stat("public"); err == nil && stat.IsDir() {
-		cmd := exec.Command("cp", "-a", "public/", "dist/")
+		cmd := exec.Command("cp", "-va", "public/", "dist")
 		if err := cmd.Run(); err != nil {
 			log.Printf("Failed to copy public/ to dist/: %v", err)
 		}
