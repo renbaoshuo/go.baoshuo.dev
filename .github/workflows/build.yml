@@ -18,6 +18,11 @@ jobs:
         with:
           go-version: '1.24'
 
+      - name: Set git user.name and user.email
+        run: |
+          git config --global user.name "BaoshuoBot"
+          git config --global user.email "bot@baoshuo.dev"
+
       - name: Install dependencies
         run: go mod tidy
 
