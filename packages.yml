@@ -1,0 +1,5 @@
+- name: example
+  import-prefix: go.baoshuo.dev/example
+  home: https://github.com/renbaoshuo/go-example
+  vcs: git
+  repo-root: https://github.com/renbaoshuo/go-example
