@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/:pkg",
+      "destination": "/:pkg.html"
+    },
+    {
+      "source": "/:pkg/*",
+      "destination": "/:pkg.html"
+    }
+  ]
+}
