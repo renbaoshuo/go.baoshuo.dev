@@ -4,14 +4,14 @@
 #   vcs: git
 #   repo-root: https://github.com/renbaoshuo/go-example
 
-- name: css-parser
-  import-prefix: go.baoshuo.dev/css-parser
+- name: cssparser
+  import-prefix: go.baoshuo.dev/cssparser
   home: https://github.com/renbaoshuo/go-css-parser
   vcs: git
   repo-root: https://github.com/renbaoshuo/go-css-parser
 
-- name: css-inliner
-  import-prefix: go.baoshuo.dev/css-inliner
+- name: cssinliner
+  import-prefix: go.baoshuo.dev/cssinliner
   home: https://github.com/renbaoshuo/go-css-inliner
   vcs: git
   repo-root: https://github.com/renbaoshuo/go-css-inliner
