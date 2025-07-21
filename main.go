@@ -2,13 +2,11 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
-
-	_ "embed"
 
 	"github.com/goccy/go-yaml"
 )
@@ -21,11 +19,13 @@ type Package struct {
 	RepoRoot     string `yaml:"repo-root"`
 }
 
-//go:embed package.template.html
-var packageTemplate string
+const (
+	distDir   = "dist"
+	publicDir = "public"
 
-//go:embed index.template.html
-var indexTemplate string
+	packageTemplateFile = "package.template.html"
+	indexTemplateFile   = "index.template.html"
+)
 
 func main() {
 	// Read packages.yml
@@ -39,45 +39,51 @@ func main() {
 		log.Fatalf("Failed to parse YAML: %v", err)
 	}
 
-	// Use embedded package template
-	tmplStr := packageTemplate
+	// Parse templates from files
+	tmpl, err := template.ParseFiles(packageTemplateFile, indexTemplateFile)
+	if err != nil {
+		log.Fatalf("Failed to parse templates: %v", err)
+	}
 
 	// Create dist directory
-	if err := os.MkdirAll("dist", 0755); err != nil {
+	if err := os.MkdirAll(distDir, 0755); err != nil {
 		log.Fatalf("Failed to create dist directory: %v", err)
 	}
 
 	for _, pkg := range pkgs {
-		out := strings.ReplaceAll(tmplStr, "{{import-prefix}}", pkg.ImportPrefix)
-		out = strings.ReplaceAll(out, "{{vcs}}", pkg.VCS)
-		out = strings.ReplaceAll(out, "{{repo-root}}", pkg.RepoRoot)
+		outPath := filepath.Join(distDir, fmt.Sprintf("%s.html", pkg.Name))
+		f, err := os.Create(outPath)
+		if err != nil {
+			log.Printf("Failed to create %s: %v", outPath, err)
+			continue
+		}
+		defer f.Close()
 
-		outPath := filepath.Join("dist", pkg.Name+".html")
-		if err := os.WriteFile(outPath, []byte(out), 0644); err != nil {
-			log.Printf("Failed to write %s: %v", outPath, err)
+		if err := tmpl.ExecuteTemplate(f, packageTemplateFile, pkg); err != nil {
+			log.Printf("Failed to execute template for %s: %v", pkg.Name, err)
 		} else {
 			fmt.Printf("Generated: %s\n", outPath)
 		}
 	}
 
-	// Generate index.html with package list using embedded template
-	var listHtml strings.Builder
-	for _, pkg := range pkgs {
-		item := fmt.Sprintf("<li><a href=\"%s\">%s</a></li>\n", pkg.Home, pkg.ImportPrefix)
-		listHtml.WriteString(item)
-	}
-	indexContent := strings.ReplaceAll(indexTemplate, "{{list}}", listHtml.String())
-	indexFile := filepath.Join("dist", "index.html")
-	if err := os.WriteFile(indexFile, []byte(indexContent), 0644); err != nil {
+	// Generate index.html with package list
+	indexFile := filepath.Join(distDir, "index.html")
+	f, err := os.Create(indexFile)
+	if err != nil {
 		log.Fatalf("Failed to create index.html: %v", err)
+	}
+	defer f.Close()
+
+	if err := tmpl.ExecuteTemplate(f, indexTemplateFile, pkgs); err != nil {
+		log.Fatalf("Failed to execute index template: %v", err)
 	}
 	fmt.Println("Generated:", indexFile)
 
 	// Copy files from public/ to dist/ using cp command if public exists
-	if stat, err := os.Stat("public"); err == nil && stat.IsDir() {
-		cmd := exec.Command("cp", "-va", "public/.", "dist/")
+	if stat, err := os.Stat(publicDir); err == nil && stat.IsDir() {
+		cmd := exec.Command("cp", "-va", publicDir+"/.", distDir+"/")
 		if err := cmd.Run(); err != nil {
-			log.Printf("Failed to copy public/ to dist/: %v", err)
+			log.Printf("Failed to copy %s/ to %s/: %v", publicDir, distDir, err)
 		}
 	}
 }

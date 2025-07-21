@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="go-import" content="{{import-prefix}} {{vcs}} {{repo-root}}">
-        <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/{{import-prefix}}">
-    </head>
-    <body>
-        Nothing to see here. Please <a href="https://pkg.go.dev/{{import-prefix}}">move along</a>.
-    </body>
+  <head>
+    <meta name="go-import" content="{{.ImportPrefix}} {{.VCS}} {{.RepoRoot}}" />
+    <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/{{.ImportPrefix}}" />
+  </head>
+  <body>
+    Nothing to see here. Please <a href="https://pkg.go.dev/{{.ImportPrefix}}">move along</a>.
+  </body>
 </html>
