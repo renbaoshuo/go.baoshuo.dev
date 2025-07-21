@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"log"
@@ -12,19 +13,21 @@ import (
 )
 
 type Package struct {
-	Name         string `yaml:"name"`
-	ImportPrefix string `yaml:"import-prefix"`
-	Home         string `yaml:"home"`
-	VCS          string `yaml:"vcs"`
-	RepoRoot     string `yaml:"repo-root"`
+	Name         string `yaml:"name" json:"name"`
+	ImportPrefix string `yaml:"import-prefix" json:"importPrefix"`
+	Home         string `yaml:"home" json:"home"`
+	VCS          string `yaml:"vcs" json:"vcs"`
+	RepoRoot     string `yaml:"repo-root" json:"repoRoot"`
 }
 
 const (
 	distDir   = "dist"
 	publicDir = "public"
 
-	packageTemplateFile = "package.template.html"
-	indexTemplateFile   = "index.template.html"
+	packagesJsonFileName = "packages.json"
+
+	packageTemplateFileName = "package.template.html"
+	indexTemplateFileName   = "index.template.html"
 )
 
 func main() {
@@ -40,7 +43,7 @@ func main() {
 	}
 
 	// Parse templates from files
-	tmpl, err := template.ParseFiles(packageTemplateFile, indexTemplateFile)
+	tmpl, err := template.ParseFiles(packageTemplateFileName, indexTemplateFileName)
 	if err != nil {
 		log.Fatalf("Failed to parse templates: %v", err)
 	}
@@ -59,7 +62,7 @@ func main() {
 		}
 		defer f.Close()
 
-		if err := tmpl.ExecuteTemplate(f, packageTemplateFile, pkg); err != nil {
+		if err := tmpl.ExecuteTemplate(f, packageTemplateFileName, pkg); err != nil {
 			log.Printf("Failed to execute template for %s: %v", pkg.Name, err)
 		} else {
 			fmt.Printf("Generated: %s\n", outPath)
@@ -74,10 +77,21 @@ func main() {
 	}
 	defer f.Close()
 
-	if err := tmpl.ExecuteTemplate(f, indexTemplateFile, pkgs); err != nil {
+	if err := tmpl.ExecuteTemplate(f, indexTemplateFileName, pkgs); err != nil {
 		log.Fatalf("Failed to execute index template: %v", err)
 	}
 	fmt.Println("Generated:", indexFile)
+
+	// Generate packages.json
+	packagesJsonFile := filepath.Join(distDir, packagesJsonFileName)
+	jsonData, err := json.MarshalIndent(pkgs, "", "  ")
+	if err != nil {
+		log.Fatalf("Failed to marshal packages to JSON: %v", err)
+	}
+	if err := os.WriteFile(packagesJsonFile, jsonData, 0644); err != nil {
+		log.Fatalf("Failed to write packages.json: %v", err)
+	}
+	fmt.Println("Generated:", packagesJsonFile)
 
 	// Copy files from public/ to dist/ using cp command if public exists
 	if stat, err := os.Stat(publicDir); err == nil && stat.IsDir() {
