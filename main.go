@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"html/template"
 	"log"
@@ -13,11 +14,16 @@ import (
 )
 
 type Package struct {
-	Name         string `yaml:"name" json:"name"`
-	ImportPrefix string `yaml:"import-prefix" json:"importPrefix"`
-	Home         string `yaml:"home" json:"home"`
-	VCS          string `yaml:"vcs" json:"vcs"`
-	RepoRoot     string `yaml:"repo-root" json:"repoRoot"`
+	Name         string `yaml:"name" json:"name" xml:"name"`
+	ImportPrefix string `yaml:"import-prefix" json:"importPrefix" xml:"import-prefix"`
+	Home         string `yaml:"home" json:"home" xml:"home"`
+	VCS          string `yaml:"vcs" json:"vcs" xml:"vcs"`
+	RepoRoot     string `yaml:"repo-root" json:"repoRoot" xml:"repo-root"`
+}
+
+type Packages struct {
+	XMLName  xml.Name  `xml:"packages"`
+	Packages []Package `xml:"package"`
 }
 
 const (
@@ -25,6 +31,7 @@ const (
 	publicDir = "public"
 
 	packagesJsonFileName = "packages.json"
+	packagesXmlFileName  = "packages.xml"
 
 	packageTemplateFileName = "package.template.html"
 	indexTemplateFileName   = "index.template.html"
@@ -92,6 +99,17 @@ func main() {
 		log.Fatalf("Failed to write packages.json: %v", err)
 	}
 	fmt.Println("Generated:", packagesJsonFile)
+
+	// Generate packages.xml
+	packagesXmlFile := filepath.Join(distDir, packagesXmlFileName)
+	xmlData, err := xml.MarshalIndent(Packages{Packages: pkgs}, "", "  ")
+	if err != nil {
+		log.Fatalf("Failed to marshal packages to XML: %v", err)
+	}
+	if err := os.WriteFile(packagesXmlFile, []byte(xml.Header+string(xmlData)), 0644); err != nil {
+		log.Fatalf("Failed to write packages.xml: %v", err)
+	}
+	fmt.Println("Generated:", packagesXmlFile)
 
 	// Copy files from public/ to dist/ using cp command if public exists
 	if stat, err := os.Stat(publicDir); err == nil && stat.IsDir() {
