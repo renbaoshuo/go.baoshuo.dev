@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+  <package>
+    <name>cssparser</name>
+    <import-prefix>go.baoshuo.dev/cssparser</import-prefix>
+    <home>https://github.com/renbaoshuo/go-css-parser</home>
+    <vcs>git</vcs>
+    <repo-root>https://github.com/renbaoshuo/go-css-parser</repo-root>
+  </package>
+  <package>
+    <name>cssinliner</name>
+    <import-prefix>go.baoshuo.dev/cssinliner</import-prefix>
+    <home>https://github.com/renbaoshuo/go-css-inliner</home>
+    <vcs>git</vcs>
+    <repo-root>https://github.com/renbaoshuo/go-css-inliner</repo-root>
+  </package>
+</packages>

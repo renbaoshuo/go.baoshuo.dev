@@ -1,0 +1,16 @@
+[
+  {
+    "name": "cssparser",
+    "importPrefix": "go.baoshuo.dev/cssparser",
+    "home": "https://github.com/renbaoshuo/go-css-parser",
+    "vcs": "git",
+    "repoRoot": "https://github.com/renbaoshuo/go-css-parser"
+  },
+  {
+    "name": "cssinliner",
+    "importPrefix": "go.baoshuo.dev/cssinliner",
+    "home": "https://github.com/renbaoshuo/go-css-inliner",
+    "vcs": "git",
+    "repoRoot": "https://github.com/renbaoshuo/go-css-inliner"
+  }
+]
