@@ -4,6 +4,12 @@
 #   vcs: git
 #   repo-root: https://github.com/renbaoshuo/go-example
 
+- name: csslexer
+  import-prefix: https://github.com/renbaoshuo/go-css-lexer
+  home: https://github.com/renbaoshuo/go-css-lexer
+  vcs: git
+  repo-root: https://github.com/renbaoshuo/go-css-lexer
+
 - name: cssparser
   import-prefix: go.baoshuo.dev/cssparser
   home: https://github.com/renbaoshuo/go-css-parser
