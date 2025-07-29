@@ -5,7 +5,7 @@
 #   repo-root: https://github.com/renbaoshuo/go-example
 
 - name: csslexer
-  import-prefix: https://github.com/renbaoshuo/go-css-lexer
+  import-prefix: go.baoshuo.dev/csslexer
   home: https://github.com/renbaoshuo/go-css-lexer
   vcs: git
   repo-root: https://github.com/renbaoshuo/go-css-lexer
