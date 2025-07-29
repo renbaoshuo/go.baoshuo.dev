@@ -2,7 +2,7 @@
 <packages>
   <package>
     <name>csslexer</name>
-    <import-prefix>https://github.com/renbaoshuo/go-css-lexer</import-prefix>
+    <import-prefix>go.baoshuo.dev/csslexer</import-prefix>
     <home>https://github.com/renbaoshuo/go-css-lexer</home>
     <vcs>git</vcs>
     <repo-root>https://github.com/renbaoshuo/go-css-lexer</repo-root>

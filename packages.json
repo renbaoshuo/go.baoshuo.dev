@@ -1,7 +1,7 @@
 [
   {
     "name": "csslexer",
-    "importPrefix": "https://github.com/renbaoshuo/go-css-lexer",
+    "importPrefix": "go.baoshuo.dev/csslexer",
     "home": "https://github.com/renbaoshuo/go-css-lexer",
     "vcs": "git",
     "repoRoot": "https://github.com/renbaoshuo/go-css-lexer"
