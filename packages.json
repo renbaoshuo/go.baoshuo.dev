@@ -1,5 +1,12 @@
 [
   {
+    "name": "cssutil",
+    "importPrefix": "go.baoshuo.dev/cssutil",
+    "home": "https://github.com/renbaoshuo/go-css-util",
+    "vcs": "git",
+    "repoRoot": "https://github.com/renbaoshuo/go-css-util"
+  },
+  {
     "name": "csslexer",
     "importPrefix": "go.baoshuo.dev/csslexer",
     "home": "https://github.com/renbaoshuo/go-css-lexer",

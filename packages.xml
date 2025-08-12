@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <packages>
   <package>
+    <name>cssutil</name>
+    <import-prefix>go.baoshuo.dev/cssutil</import-prefix>
+    <home>https://github.com/renbaoshuo/go-css-util</home>
+    <vcs>git</vcs>
+    <repo-root>https://github.com/renbaoshuo/go-css-util</repo-root>
+  </package>
+  <package>
     <name>csslexer</name>
     <import-prefix>go.baoshuo.dev/csslexer</import-prefix>
     <home>https://github.com/renbaoshuo/go-css-lexer</home>
