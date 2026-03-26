@@ -27,3 +27,9 @@
   home: https://github.com/renbaoshuo/go-css-inliner
   vcs: git
   repo-root: https://github.com/renbaoshuo/go-css-inliner
+
+- name: llmfunc
+  import-prefix: go.baoshuo.dev/llmfunc
+  home: https://github.com/renbaoshuo/llmfunc
+  vcs: git
+  repo-root: https://github.com/renbaoshuo/llmfunc
