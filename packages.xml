@@ -28,4 +28,11 @@
     <vcs>git</vcs>
     <repo-root>https://github.com/renbaoshuo/go-css-inliner</repo-root>
   </package>
+  <package>
+    <name>llmfunc</name>
+    <import-prefix>go.baoshuo.dev/llmfunc</import-prefix>
+    <home>https://github.com/renbaoshuo/llmfunc</home>
+    <vcs>git</vcs>
+    <repo-root>https://github.com/renbaoshuo/llmfunc</repo-root>
+  </package>
 </packages>
